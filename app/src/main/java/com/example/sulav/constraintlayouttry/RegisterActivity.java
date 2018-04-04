@@ -1,6 +1,5 @@
 package com.example.sulav.constraintlayouttry;
 
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,71 +13,163 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText etEmail, etPassword;
-    Button btnRegister;
+    EditText etFirstName, etLastname, etEmail, etPassword, etRePassword;
+    Button btnRegister,  btnLogin ;
+    String firstName, lastname, email, password, rePassword;
     TextView tvStatus;
 
-    private static final  String DB_URL = "jdbc:mysql://localhost:3306/photogram_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
-        etEmail = findViewById(R.id.tvEmail);
-        etPassword = findViewById(R.id.tvPassword);
+        setupUI();
+
+    }
+
+    private void setupUI() {
+        etFirstName = findViewById(R.id.etFirstName);
+        etLastname = findViewById(R.id.etLastName);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        etRePassword = findViewById(R.id.etRePassword);
         btnRegister = findViewById(R.id.btnRegister);
+        btnLogin = findViewById(R.id.btnLogin);
         tvStatus = findViewById(R.id.tvStatus);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                new Send().execute("");
-                runPhp2();
+                runRegisterScript();
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //openLoginActivity();
             }
         });
     }
-//    private void runPhp(){
-//
-//        String url = "http://192.168.0.102/test.php";
-//        final RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                tvStatus.setText(response);
-//                requestQueue.stop();
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                tvStatus.setText(error.getMessage());
-//                requestQueue.stop();
-//            }
-//        });
-//        requestQueue.add(stringRequest);
-//    }
 
-    private void runPhp2(){
+    private void runRegisterScript(){
+        tvStatus.setText("");
+        Toast.makeText(this, "Register started", Toast.LENGTH_SHORT).show();
+        String url = "http://10.0.2.2/photogram_app/register.php";
 
-                String url = "http://192.168.0.102/test.php";
+        firstName = etFirstName.getText().toString();
+        lastname = etLastname.getText().toString();
+        email = etEmail.getText().toString();
+        password = etPassword.getText().toString();
+        rePassword = etRePassword.getText().toString();
+
+        if(! password.equals(rePassword)){
+            etPassword.setText("");
+            etRePassword.setText("");
+            tvStatus.setText("The two Passwords don't match! Enter Again!");
+            return;
+        }
+
+        runVolleyString(url);
+//        runVolleyObject(url);
+//        runVolleyArray(url);
+
+
+    }
+
+    private void runVolleyObject(String url) {
         final RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    tvStatus.setText(response.getString("status") + ": "+response.getString("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                tvStatus.setText("xxx2"+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("firstname", firstName);
+                params.put("lastname", lastname);
+                params.put("email", email);
+                params.put("password", password);
+                return params;
+            }
+        };
+
+        requestQueue.add(jsonRequest);
+    }
+
+    private void runVolleyArray(String url) {
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                tvStatus.setText(response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                tvStatus.setText(error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("firstname", firstName);
+                params.put("lastname", lastname);
+                params.put("email", email);
+                params.put("password", password);
+                return params;
+            }
+        };
+
+        requestQueue.add(jsonRequest);
+    }
+
+    private void runVolleyString(String url){
+//        String url2 = "https://simplifiedcoding.net/demos/view-flipper/heroes.php";
+        final RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                tvStatus.setText(response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+//                    JSONObject jheroes = (JSONObject) obj.getJSONArray("heroes").get(0);
+                        String t = obj.getString("message");
+                    tvStatus.setText(t);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 requestQueue.stop();
             }
         }, new Response.ErrorListener() {
@@ -91,56 +182,14 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("email", etEmail.getText().toString());
-                params.put("password", etPassword.getText().toString());
-
+                params.put("firstname", firstName);
+                params.put("lastname", lastname);
+                params.put("email", email);
+                params.put("password", password);
                 return params;
             }
         };
+
         requestQueue.add(stringRequest);
-    }
-    private class Send extends AsyncTask<String, String, String>{
-
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
-        String msg = "";
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                Toast.makeText(RegisterActivity.this, "hello here", Toast.LENGTH_SHORT).show();
-                if(connection == null){
-                    msg = "connection is not working";
-                } else{
-                    String query = "INSERT INTO users(email, password) values('"+email+"','"+password+"')";
-                    Statement statement = connection.createStatement();
-                    statement.executeUpdate(query);
-                    msg = "registration successful";
-                }
-                connection.close();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return msg;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            tvStatus.setText(s);
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-        }
     }
 }
