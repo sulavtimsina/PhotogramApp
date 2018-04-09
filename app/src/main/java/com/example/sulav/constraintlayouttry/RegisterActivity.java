@@ -38,9 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         setupUI();
-
     }
 
     private void setupUI() {
@@ -164,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
 //                    JSONObject jheroes = (JSONObject) obj.getJSONArray("heroes").get(0);
-                        String t = obj.getString("message");
+                    String t = obj.getString("message");
                     tvStatus.setText(t);
 
                 } catch (JSONException e) {
