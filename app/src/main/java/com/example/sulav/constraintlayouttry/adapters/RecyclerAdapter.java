@@ -1,6 +1,7 @@
 package com.example.sulav.constraintlayouttry.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.sulav.constraintlayouttry.Model.Post;
 import com.example.sulav.constraintlayouttry.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -44,6 +47,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         Post post = posts.get(position);
         holder.tvName.setText(post.getName());
         holder.tvEmail.setText(post.getEmail());
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(post.getPhoto_location(), holder.ivProfilePic);
     }
 
     @Override
@@ -54,11 +60,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder  {
         TextView tvName, tvEmail;
+        ImageView ivProfilePic;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvEmail = itemView.findViewById(R.id.tvEmail);
+            ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
         }
     }
 }
