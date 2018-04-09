@@ -11,14 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.sulav.constraintlayouttry.Model.Post;
 import com.example.sulav.constraintlayouttry.R;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>{
     private static final String TAG = "RecyclerAdapter";
@@ -30,33 +26,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         this.context = context;
     }
 
-    public RecyclerAdapter(ArrayList<Post> posts){
-        this.posts = posts;
-    }
-
+    // create a new view
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item, parent, false);
-        return new MyViewHolder(view);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View v= layoutInflater.inflate(R.layout.row_item, parent, false);
+        return new MyViewHolder(v);
+
     }
 
+    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Glide.with(context)
-                .asBitmap()
-                .load(posts.get(position).getPhoto_location())
-                .into(holder.ivMainPic);
-        holder.tvName.setText(posts.get(position).getUserid());
-        holder.tvLikes.setText(posts.get(position).getLikes());
-        holder.tvDislikes.setText(posts.get(position).getDislikes());
-        holder.ivMainPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked");
-                Toast.makeText(context, "Main image clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+        Post post = posts.get(position);
+        holder.tvName.setText(post.getName());
+        holder.tvEmail.setText(post.getEmail());
     }
 
     @Override
@@ -64,20 +51,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return posts.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView tvName, tvLikes, tvDislikes;
-        CircleImageView ivProfilePic;
-        ImageView ivMainPic;
+
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
+        TextView tvName, tvEmail;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
-            tvLikes = itemView.findViewById(R.id.tvLikes);
-            tvDislikes = itemView.findViewById(R.id.tvDislikes);
-            ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
-            ivMainPic = itemView.findViewById(R.id.ivMainPic);
-
-
+            tvEmail = itemView.findViewById(R.id.tvEmail);
         }
     }
 }

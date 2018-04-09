@@ -32,29 +32,29 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rV);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
     }
 
     private void loadData() {
-        Post post = new Post("sulav",3,4, "http://lorempixel.com/300/300/");
+        Post post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
+        posts.add(post);
+        post = new Post("sulav","sulav@gmail.com","photolocation");
         posts.add(post);
 
-        post = new Post("ram",5,14, "http://lorempixel.com/300/300/");
-        posts.add(post);
-        post = new Post("dsfa",52,4, "http://lorempixel.com/300/300/");
-        posts.add(post);
-        post = new Post("radasfm",15,1, "http://lorempixel.com/300/300/");
-        posts.add(post);
-        post = new Post("dasf",5,5, "https://picsum.photos/300/300");
-        posts.add(post);
-        post = new Post("3e",15,7, "http://lorempixel.com/300/300/");
-        posts.add(post);
-        post = new Post("raghm",25,8, "https://picsum.photos/300/300");
-        posts.add(post);
-        post = new Post("jlj",35,14, "http://lorempixel.com/300/300/");
-        posts.add(post);
-        post = new Post("lhk",5,14, "https://picsum.photos/300/300");
-        posts.add(post);
     }
 }
