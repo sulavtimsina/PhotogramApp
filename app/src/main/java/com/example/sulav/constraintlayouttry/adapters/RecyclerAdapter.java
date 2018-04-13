@@ -37,7 +37,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         View v= layoutInflater.inflate(R.layout.row_item, parent, false);
         /*Pass this view to our MyViewHolder constructor and return it*/
         return new MyViewHolder(v);
-
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -47,7 +46,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         // - post is the Post object at the 'position', so we receive it and use it to populate
         // - view components using Post's fields.
         Post post = posts.get(position);
-        //here holder is MyViewHolder object, its tvName is the text view which we have referred in
+        // here holder is MyViewHolder object, its tvName is the text view which we have referred in
         // MyViewHolder class below. so using this below line, we can set text in that TextView.
         holder.tvName.setText(post.getName());
         holder.tvEmail.setText(post.getEmail());

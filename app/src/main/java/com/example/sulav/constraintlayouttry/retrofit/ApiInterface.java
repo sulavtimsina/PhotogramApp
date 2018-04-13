@@ -9,6 +9,6 @@ import retrofit2.http.POST;
 
 public interface ApiInterface {
 
-    @POST("echoJson.php")
+    @POST("echoJsonDb.php")
     Call<List<Post>> getPosts();
 }

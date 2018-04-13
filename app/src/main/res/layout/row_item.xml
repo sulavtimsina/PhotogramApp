@@ -8,7 +8,6 @@
 
     <ImageView
         android:id="@+id/ivProfilePic"
-        android:src="@mipmap/profile_pic"
         android:layout_width="80dp"
         android:layout_height="80dp" />
     
