@@ -1,6 +1,5 @@
-package com.example.sulav.constraintlayouttry;
+package com.example.sulav.constraintlayouttry.activities;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.example.sulav.constraintlayouttry.Model.Post;
+import com.example.sulav.constraintlayouttry.R;
 import com.example.sulav.constraintlayouttry.adapters.RecyclerAdapter;
 import com.example.sulav.constraintlayouttry.retrofit.ApiInterface;
 import com.example.sulav.constraintlayouttry.retrofit.RetrofitClient;
@@ -20,7 +20,6 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
