@@ -3,22 +3,17 @@ package com.example.sulav.constraintlayouttry.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.sulav.constraintlayouttry.Model.Post;
 import com.example.sulav.constraintlayouttry.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>{
     private static final String TAG = "RecyclerAdapter";
@@ -30,54 +25,55 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         this.context = context;
     }
 
-    public RecyclerAdapter(ArrayList<Post> posts){
-        this.posts = posts;
-    }
-
+    // create a new view
+    // Here we attach
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item, parent, false);
-        return new MyViewHolder(view);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        /* = R.layout.row_item = layout of each row item
+           = parent
+           = false*/
+        View v= layoutInflater.inflate(R.layout.row_item, parent, false);
+        /*Pass this view to our MyViewHolder constructor and return it*/
+        return new MyViewHolder(v);
     }
 
+    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Glide.with(context)
-                .asBitmap()
-                .load(posts.get(position).getPhoto_location())
-                .into(holder.ivMainPic);
-        holder.tvName.setText(posts.get(position).getUserid());
-        holder.tvLikes.setText(posts.get(position).getLikes());
-        holder.tvDislikes.setText(posts.get(position).getDislikes());
-        holder.ivMainPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked");
-                Toast.makeText(context, "Main image clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // - get element from your dataset at this position
+        // - post is the Post object at the 'position', so we receive it and use it to populate
+        // - view components using Post's fields.
+        Post post = posts.get(position);
+        // here holder is MyViewHolder object, its tvName is the text view which we have referred in
+        // MyViewHolder class below. so using this below line, we can set text in that TextView.
+        holder.tvName.setText(post.getName());
+        holder.tvEmail.setText(post.getEmail());
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(post.getPhoto_location(), holder.ivProfilePic);
     }
 
+    //return the size of arraylist or array
     @Override
     public int getItemCount() {
         return posts.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView tvName, tvLikes, tvDislikes;
-        CircleImageView ivProfilePic;
-        ImageView ivMainPic;
+    //This is the class which holds each row item.
+    // give reference to all the view components which has to be accessed or modified in runtime
+    // like we have to setText in tvName.
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
+        TextView tvName, tvEmail;
+        ImageView ivProfilePic;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
-            tvLikes = itemView.findViewById(R.id.tvLikes);
-            tvDislikes = itemView.findViewById(R.id.tvDislikes);
+            tvEmail = itemView.findViewById(R.id.tvEmail);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
-            ivMainPic = itemView.findViewById(R.id.ivMainPic);
-
-
         }
     }
 }

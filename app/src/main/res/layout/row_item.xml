@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<LinearLayout
     android:id="@+id/picNameRow"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/ivProfilePic"
-        android:src="@mipmap/ic_launcher"
         android:layout_width="80dp"
         android:layout_height="80dp" />
-
     
     <LinearLayout
         android:orientation="vertical"
@@ -34,61 +29,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="sulavtimsina@gmail.com"
+            android:text="sulavtimsina@yahoo.com"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:id="@+id/email"
+            android:id="@+id/tvEmail"
             />
     </LinearLayout>
 
 
 </LinearLayout>
 
-<LinearLayout
-
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/ivMainPic"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:src="@mipmap/main_photo" />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/tvLikes"
-            android:text="6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/ivLike"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/like" />
-
-        <TextView
-            android:id="@+id/tvDislikes"
-            android:text="4"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/ivDislike"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/dislike" />
-    </LinearLayout>
-
-</LinearLayout>
-
-</LinearLayout>
