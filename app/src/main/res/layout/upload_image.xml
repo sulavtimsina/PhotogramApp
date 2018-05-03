@@ -12,9 +12,9 @@
 
 
     <LinearLayout
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <Button
@@ -25,10 +25,10 @@
 
         <EditText
             android:id="@+id/editTextName"
-            android:hint="Caption"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Caption" />
 
         <Button
             android:id="@+id/buttonUpload"
@@ -41,7 +41,14 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="444dp" />
+
+    <Button
+        android:id="@+id/btnViewPost"
+        android:onClick="viewPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Posts" />
 
 
 </LinearLayout>

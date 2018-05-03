@@ -185,4 +185,8 @@ public class UploadImageActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    public void viewPost(View view) {
+        Intent myIntent = new Intent(this, MainActivity.class);
+        startActivity(myIntent);
+    }
 }

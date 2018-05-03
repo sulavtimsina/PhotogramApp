@@ -15,4 +15,7 @@
         completions."
     </string>
     <string name="select">Select</string>
+    <string name="facebook_app_id">157958028223680</string>
+    <string name="fb_login_protocol_scheme">fb157958028223680</string>
+
 </resources>
